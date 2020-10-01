@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        *{margin: 0;padding: 0;}
+      .wrapper,body {
+        position: absolute;
+        height: 100vh;
+        width: 100vw;
+        background-color: #ebebeb;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        transition: all 0.5s ease;
+      }
+      body{
+          flex-direction: row;
+      }
+      .loader {
+        width: 60%;
+        height: 40px;
+        background-color: rgb(214, 214, 214);
+        position: relative;
+        border-radius: 1rem;
+        
+      }
+      .progressbar {
+        position: absolute;
+        height: 40px;
+        top: 0;
+        left: 0;
+        background-color: rgb(93, 140, 250);
+        border-radius: 1rem;
+        font-family: 'Inconsolata', monospace;
+        transition: all 0.5s ease;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: flex-start;
+        color: white;
+        font-size: large;
+      }
+      button {
+        margin-top: 40px;
+        height: 36px;
+        width: 120px;
+        border: none;
+        background-color: blueviolet;
+        color: white;
+        font-family: 'Inconsolata', monospace;
+      }
+      p{
+        color: #32BA7C;
+        font-family: 'Inconsolata', monospace;
+        font-size: 5rem;
+      }
+      img{
+          max-height: 5rem;
+      }
+      .loading{
+          margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="wrapper">
+        <div class="loader" data="20">
+            <div class="progressbar" "></div>
+          </div>
+    <button onclick="initiate()">Request data</button>
+
+    </div>
+    <p>Loaded!</p>
+    <img src="checked.svg" alt="done" >
+    <!-- Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
+    <script>
+        function initiate(){
+            const img=document.createElement('img')
+            img.setAttribute('src','loader.svg')
+            img.classList.add('loading')
+            const wrapper=document.querySelector('.wrapper')
+            wrapper.append(img)
+            client.send()
+        }
+       
+        client = new XMLHttpRequest()
+        client.open('GET', 'https://picsum.photos/1000')
+        client.addEventListener('progress', (e) => {
+        const progressbar = document.querySelector('.progressbar')
+        let completed = 0
+        
+            
+        if (e.lengthComputable) {
+            completed = (Number.parseInt(e.loaded) / Number.parseInt(e.total)) * 100
+            completed = completed.toFixed(2)
+            progressbar.innerHTML = completed
+            progressbar.style.width = `${completed}%`
+        }
+        console.log(completed, '%')
+        console.log(e)
+        })
+        client.addEventListener('loadend',(e)=>{
+        const progressbar = document.querySelector('.progressbar')
+        progressbar.style.background = '#46A92B'
+        client.open('GET', 'https://picsum.photos/1000')  
+        setTimeout(removeWrap,500)      
+        })
+        const removeWrap = () => {
+        const wrapper = document.querySelector('.wrapper')
+        wrapper.style.transform='translateX(-100%)' 
+        }
+        
+    </script>
+  </body>
+</html>
