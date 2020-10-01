@@ -22,9 +22,6 @@
         flex-direction: column;
         transition: all 0.5s ease;
       }
-      body{
-          flex-direction: row;
-      }
       .loader {
         width: 60%;
         height: 40px;
@@ -58,13 +55,23 @@
         color: white;
         font-family: 'Inconsolata', monospace;
       }
-      p{
+      .result{
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+          width: 100%;
+          margin-bottom: 40px;
+      }
+      span{
         color: #32BA7C;
         font-family: 'Inconsolata', monospace;
         font-size: 5rem;
+        
       }
-      img{
+      .done{
           max-height: 5rem;
+          display: inline-block;
       }
       .loading{
           margin-top: 20px;
@@ -80,8 +87,10 @@
     <button onclick="initiate()">Request data</button>
 
     </div>
-    <p>Loaded!</p>
-    <img src="checked.svg" alt="done" >
+    <div class="result"><span>Loaded!</span>
+        <img class="done" src="checked.svg" alt="done" ></div>
+    <img src='https://picsum.photos/500'>
+    
     <!-- Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a> -->
     <script>
         function initiate(){
@@ -94,7 +103,7 @@
         }
        
         client = new XMLHttpRequest()
-        client.open('GET', 'https://picsum.photos/1000')
+        client.open('GET', 'https://picsum.photos/500')
         client.addEventListener('progress', (e) => {
         const progressbar = document.querySelector('.progressbar')
         let completed = 0
